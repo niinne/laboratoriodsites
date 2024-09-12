@@ -235,3 +235,32 @@
         document.querySelector('.error-message').textContent = `Erro de rede: ${error.message}`;
     });
 });
+
+/**
+ * Optimizing scroll functions
+ */
+
+function debounce(func, wait) {
+  let timeout;
+  return function(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
+
+// Add event listeners for scroll with debouncing to optimize performance
+window.addEventListener('scroll', debounce(toggleScrolled, 200));
+window.addEventListener('scroll', debounce(toggleScrollTop, 200));
+
+// Remove event listeners when they are no longer needed
+document.removeEventListener('scroll', toggleScrolled);
+
+// Check if elements are present before initializing
+if (document.querySelector(".init-swiper")) {
+  initSwiper();
+}
+if (document.querySelector('.glightbox')) {
+  GLightbox({
+    selector: '.glightbox'
+  });
+}
